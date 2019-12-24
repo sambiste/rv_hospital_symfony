@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div class="text-right">
+<a href="{{path('medecin_service_add') }}" class="btn btn-primary">Ajouter un Medecin</a>
+</div>
+<table class="">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>matricule</th>
+            <th>prenom</th>
+            <th>nom</th>
+            <th>datenaissance</th>
+            <th>telephone</th>
+            <th>email</th>
+            <th>service</th>
+            <th>ACTION 1-ACTION 2</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for medecin in medecin %}
+        <tr>
+            <td>{{medecin.id}}</td>
+            <td>{{medecin.matricule}}</td>
+            <td>{{medecin.prenom}}</td>
+            <td>{{medecin.nom}}</td>
+            <td>{{medecin.datenaissance | date('d/m/y')}}</td>
+            <td>{{medecin.telephone}}</td>
+            <td>{{medecin.email}}</td>  
+            <td>{{medecin.service.libelle}}</td>
+             <td >
+    <a href="{{ path('medecin_service_edit',{id:medecin.id}) }}" class="btn btn-primary">Edit</a>
+
+    <form method ="POST" action ="{{ path('medecin_service_delete', {id: medecin.id}) }}" style="display:
+    inline-block" onsubmit="return confirm('voulez vous vraimentn supprimer')">
+    <input type="hidden" name ="method" value="DELETE">
+    <input type="hidden" name ="method" value="{{ csrf_token('delete' ~ medecin.id) }}">
+    <button class="btn btn-danger">Supprimer</button>
+    </form>
+    </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+         {% endblock %}
+
+
